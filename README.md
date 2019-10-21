@@ -9,9 +9,9 @@ This library provides a function ```checkThaiSpelling```.
 
 **return**: a 2D integer array of n rows and 2 columns, where n is the number of incorrectly spelled words.
 
-Column 1: the index of the first character of a misspelled word.
+Column 1: the index of the first character of a misspellt word.
 
-Column 2: the index of the first character *after* the misspelled word.
+Column 2: the index of the first character *after* the misspellt word.
 
 **Example**:
 
@@ -19,7 +19,7 @@ Column 2: the index of the first character *after* the misspelled word.
 > checkThaiSpelling("ไข่ใก่ฟองนี้มีขะหนาดไหญ่")
 [[ 3,  6], [14, 24]]
 //ใก่ and ขะหนาดไหญ่ are marked as incorrect
-//note that ขะหนาด and ไหญ่ are grouped together
+//note that ขะหนาด and ไหญ่ are grouped together. This is because the backend has no knowledge of the misspelt word and cannot guess where it ends.
 //3 -> ใ in ใก่, 6 -> ฟ in ฟอง after ใก่
 //14 -> ข in ขะหนาด, 24 -> emptiness after the string (the string is 24 letters long)
 
@@ -48,47 +48,56 @@ import('./checker.js').then(function(module) {
     });
 });
 ```
-Usage example:
+Usage example - check spelling of text in a text area and alert misspelt words:
 
 ```javascript
 var checkerFunction;//any name you want
-var thaiSpellcheckerReady = false;
+var thaiSpellcheckerReady = false;//the checker requires some loading, so it is not ready in the beginning
+
 var someButton;
 var someTextArea;
-import('./checker.js').then(function(module) {
-    module.loadThaiSpellchecker().then(function(r) {
-        checkerFunction = r;//save the function to global var
-        thaiSpellcheckerReady = true;
+
+import('./checker.js').then(function(module) {//dynamic import the checker module
+    module.loadThaiSpellchecker().then(function(r) {//load the checker
+        //r is the checker function
+        checkerFunction = r;//save the function to a global var so we can call it from elsewhere
+        thaiSpellcheckerReady = true;//the checker is ready now
     });
 });
+
 window.onload = function() {
     someButton = document.getElementById("myButton");
-    someTextArea= document.getElementById("myTextArea");
-    someButton.onclick = function() {
-    if(!thaiSpellcheckerReady) {
-        alert("not ready");
-        return;
-    }
+    someTextArea = document.getElementById("myTextArea");
     
-    var text = someTextArea.value;
-    var checkResult = checkerFunction(text);//check the text
-    if(checkResult.length > 0) {//result length is 0 if no misspelling is found
-        alert("you made mistakes");
-        
-        //alert every word marked as incorrect
-        for(var i=0; i<checkResult.length; i++) {
-            alert("incorrectly spelled word: " + text.slice(checkResult[i][0], checkResult[i][1]));
+    //on click, check text in the text area and alert errors.
+    someButton.onclick = function() {
+        if(!thaiSpellcheckerReady) {
+            alert("not ready");
+            return;
         }
-        return;
-    }
-    else {
-        alert("no mistake!");
+        
+        var text = someTextArea.value;
+        
+        var checkResult = checkerFunction(text);//check the text
+        
+        if(checkResult.length > 0) {//result length is 0 if no misspelling is found
+            alert("mistake(s) found");
+            
+            //alert every word marked as incorrect
+            for(var i=0; i<checkResult.length; i++) {
+                alert("incorrectly spelled word: " + text.slice(checkResult[i][0], checkResult[i][1]));
+            }
+            return;
+        }
+        else {
+            alert("no mistake!");
+        }
     }
 }
 ```
 
 
-## Using Without Dynamic Import
+## Using With Static Import
 In your JavaScript:
 
 ```javascript
@@ -102,8 +111,7 @@ loadThaiSpellchecker().then(function(checkThaiSpelling) {
 ```
 
 ## Using Without Import
-Remember that if the browser does not support WebAssembly, this won't work anyway.
-If you want to use this in browsers that support WebAssembly, but not ```import```, use
+If you want to use this in browsers without ```import``` support, use
 
 ```html
 <script src="thbrk.no_import.js"></script>
@@ -115,12 +123,14 @@ If you want to use this in browsers that support WebAssembly, but not ```import`
     });
 </script>
 ```
-But be careful of name collision.
+But keep in mind that most browsers that support WebAssembly support ```import``` too anyway.
+
+Also be careful of name collision.
 
 # Notes
-Typically, checking should take no more than 10 milliseconds. Still, you should call the function asynchronously if possible.
+Typically, checking should take no more than 10 milliseconds. Still, you should assume the worst (a few hundred milliseconds, probably).
 
-Checking is not always correct. Currently, the checker does not take in account word usage frequency. A word can be misspelled to a less popular, but correct, word (ex. มาก -> มมาก).
+Checking is not always correct. Currently, the checker does not take in account word usage frequency. A word can be misspellt to a less common (but still correct) word (ex. มาก -> มมาก).
 
 libthai, the word breaking backend used, needs 'recovery space' of 3 correct words after an incorrect word.
 
@@ -139,7 +149,7 @@ libthai, the word breaking backend used, needs 'recovery space' of 3 correct wor
 ```
 
 
-Word suggestion coming in the future.
+Word replacements suggestion coming in the future.
 
 
 # License
