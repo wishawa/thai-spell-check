@@ -19,7 +19,7 @@ Column 2: the index of the first character *after* the misspelled word.
 > checkThaiSpelling("ไข่ใก่ฟองนี้มีขะหนาดไหญ่")
 [[ 3,  6], [14, 24]]
 //ใก่ and ขะหนาดไหญ่ are marked as incorrect
-//note that ขะหนาด and ใหญ่ are grouped together
+//note that ขะหนาด and ไหญ่ are grouped together
 //3 -> ใ in ใก่, 6 -> ฟ in ฟอง after ใก่
 //14 -> ข in ขะหนาด, 24 -> emptiness after the string (the string is 24 letters long)
 
@@ -71,6 +71,27 @@ But be careful of name collision.
 
 # Notes
 Typically, checking should take no more than 10 milliseconds. Still, you should call the function asynchronously if possible.
+
+Checking is not always correct. Currently, the checker does not take in account word usage frequency. A word can be misspelled to a less popular, but correct, word (ex. มาก -> มมาก).
+
+libthai, the word breaking backend used, needs 'recovery space' of 3 correct words after an incorrect word.
+
+```
+<incorrect><correct><correct>
+//all marked as incorrect
+
+<incorrect><correct><correct><correct>
+//only first word marked as incorrect
+
+<incorrect><correct><correct><incorrect><correct>
+//all marked as incorrect
+
+<incorrect><correct><correct><correct><incorrect><correct>
+//first and last two words marked as incorrect
+```
+
+
+Word suggestion coming in the future.
 
 
 # License
