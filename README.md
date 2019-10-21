@@ -3,10 +3,7 @@ JavaScript-WebAssembly to check spelling of Thai text
 
 # Usage
 ## The Function
-This library provides the function 
-```
-checkThaiSpelling
-```
+This library provides the function ```checkThaiSpelling```
 
 **input**: a javascript string
 
@@ -72,7 +69,7 @@ If you want to use this in browsers that support WebAssembly, but not ```import`
 ```
 But be careful of name collision.
 
-# Recommendations
+# Notes
 Typically, checking should take no more than 10 milliseconds. Still, you should call the function asynchronously if possible.
 
 
