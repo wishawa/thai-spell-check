@@ -3,7 +3,7 @@ JavaScript-WebAssembly to check spelling of Thai text
 
 # Usage
 ## The Function
-This library provides the function ```checkThaiSpelling```
+This library provides a function ```checkThaiSpelling```.
 
 **input**: a javascript string
 
@@ -40,8 +40,10 @@ In your JavaScript:
 
 ```javascript
 import('./checker.js').then(function(module) {
+    //loadThaiSpellchecker() returns a promise that resolves to the checker function.
     module.loadThaiSpellchecker().then(function(checkThaiSpelling) {
         //At this point the function checkThaiSpelling is ready.
+        //You probably want to save the function to a global variable so it can be called from outside this scope.
         console.log(checkThaiSpelling("ไข่ใก่ฟองนี้มีขะหนาดไหญ่"));
     });
 });
@@ -52,8 +54,10 @@ In your JavaScript:
 
 ```javascript
 import {loadThaiSpellchecker} from './checker.js';
+//loadThaiSpellchecker() returns a promise that resolves to the checker function.
 loadThaiSpellchecker().then(function(checkThaiSpelling) {
     //At this point the function checkThaiSpelling is ready.
+    //You probably want to save the function to a global variable so it can be called from outside this scope.
     console.log(checkThaiSpelling("ไข่ใก่ฟองนี้มีขะหนาดไหญ่"));
 });
 ```
