@@ -43,11 +43,48 @@ import('./checker.js').then(function(module) {
     //loadThaiSpellchecker() returns a promise that resolves to the checker function.
     module.loadThaiSpellchecker().then(function(checkThaiSpelling) {
         //At this point the function checkThaiSpelling is ready.
-        //You probably want to save the function to a global variable so it can be called from outside this scope.
         console.log(checkThaiSpelling("ไข่ใก่ฟองนี้มีขะหนาดไหญ่"));
+        //You probably want to save the function to a global variable so it can be called from outside this scope.
     });
 });
 ```
+Usage example:
+
+```javascript
+var checkerFunction;//any name you want
+var thaiSpellcheckerReady = false;
+var someButton;
+var someTextArea;
+import('./checker.js').then(function(module) {
+    module.loadThaiSpellchecker().then(function(r) {
+        checkerFunction = r;//save the function to global var
+        thaiSpellcheckerReady = true;
+    });
+});
+window.onload = function() {
+    someButton = document.getElementById("myButton");
+    someTextArea= document.getElementById("myTextArea");
+    someButton.onclick = function() {
+    if(!thaiSpellcheckerReady) {
+        alert("not ready");
+        return;
+    }
+    
+    var text = someTextArea.value;
+    var checkResult = checkerFunction(text);//check the text
+    if(checkResult.length > 0) {//result length is 0 if no misspelling is found
+        alert("you made mistakes");
+        
+        //alert every word marked as incorrect
+        for(var i=0; i<checkResult.length; i++) {
+            alert("incorrectly spelled word: " + text.slice(checkResult[i][0], checkResult[i][1]));
+        }
+        return;
+    }
+}
+}
+```
+
 
 ## Using Without Dynamic Import
 In your JavaScript:
@@ -57,8 +94,8 @@ import {loadThaiSpellchecker} from './checker.js';
 //loadThaiSpellchecker() returns a promise that resolves to the checker function.
 loadThaiSpellchecker().then(function(checkThaiSpelling) {
     //At this point the function checkThaiSpelling is ready.
-    //You probably want to save the function to a global variable so it can be called from outside this scope.
     console.log(checkThaiSpelling("ไข่ใก่ฟองนี้มีขะหนาดไหญ่"));
+    //You probably want to save the function to a global variable so it can be called from outside this scope.
 });
 ```
 
