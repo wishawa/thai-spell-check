@@ -11,7 +11,6 @@ function loadThaiSpellchecker() {
     return new Promise(function(resolve, reject) {
         thaiSpellcheckerBackend().then(function(r) {//a promise that resolves to the WebAssembly Module object
             Module = r;//Save the Module object to a global variable
-
             findBreaksFunctionWrapper = Module.cwrap('th_brk_wc_find_breaks', 'number', ['number', 'number', 'number', 'number', 'number', 'number']);
             //[ThBrk *brk, const thchar_t *s, int pos[], size_t pos_sz, int inc[], int *inc_ret]
             breakerObject = Module.ccall('th_brk_new', 'number', ['string'], [null]);

@@ -1,6 +1,42 @@
 # Thai-Spell-Check
 JavaScript-WebAssembly to check spelling of Thai text
 
+```javascript
+> checkThaiSpelling("ไข่ใก่ฟองนี้มีขะหนาดไหญ่")
+[[ 3,  6], [14, 24]]
+//output explanation available below
+```
+
+# Installation / File Placement
+## Normal Installation
+The files you need are:
+
+1. ```checker.js```
+
+2. ```thbrk.js```
+
+3. ```thbrk.wasm```
+
+4. ```thbrk.data```
+
+**Place all four files in the same directory of the page you want to use this on**
+
+## Custom Files Location
+Custom files location requires some manual tweak.
+
+1. Open ```thbrk.js``` in your text editor. You need a text editor that can handle very long text in a single line.
+
+2. To specify ```thbrk.data``` location: search for ```REMOTE_PACKAGE_BASE="thbrk.data"``` replace it with ```REMOTE_PACKAGE_BASE="YOUR/PATH/HERE/thbrk.data"``` where ```YOUR/PATH/HERE/``` is *relative to the page HTML* (can also be absolute ```/YOUR/ABSOLUTE/PATH```).
+
+3. To specify ```thbrk.wasm``` location: search for ```wasmBinaryFile="thbrk.wasm"``` replace it with ```wasmBinaryFile="YOUR/PATH/HERE/thbrk.wasm"``` where ```YOUR/PATH/HERE/``` is *relative to the page HTML* (can also be absolute ```/YOUR/ABSOLUTE/PATH```).
+
+4. Save ```thbrk.js```.
+
+5. To specify ```thbrk.js``` location, edit the first line of ```checker.js``` from ```import thaiSpellcheckerBackend from './thbrk.js';``` to ```import thaiSpellcheckerBackend from './YOUR/PATH/HERE/thbrk.js';```. Path is *relative to ```checker.js```*. Also, you need the ```./``` if your path is relative. Again, absolute path works too.
+
+6. To specify ```checker.js``` location, just specify the path when importing. Ex: ```import('./YOUR/PATH/HERE/checker.js')```. Path is *relative to your JS file*. Also, you need the ```./``` if your path is relative. Again, absolute path works too.
+
+
 # Usage
 ## The Function
 This library provides a function ```checkThaiSpelling```.
@@ -24,16 +60,6 @@ Column 2: the index of the first character *after* the misspellt word.
 //14 -> ข in ขะหนาด, 24 -> emptiness after the string (the string is 24 letters long)
 
 ```
-
-
-## Files
-You only need
-1. checker.js
-2. thbrk.js
-3. thbrk.wasm
-4. thbrk.data
-
-
 
 ## Using With Dynamic Import
 In your JavaScript:
@@ -128,10 +154,13 @@ But keep in mind that most browsers that support WebAssembly support ```import``
 Also be careful of name collision.
 
 # Notes
+### Performance
 Typically, checking should take no more than 10 milliseconds. Still, you should assume the worst (a few hundred milliseconds, probably).
 
+### Correctness
 Checking is not always correct. Currently, the checker does not take in account word usage frequency. A word can be misspellt to a less common (but still correct) word (ex. มาก -> มมาก).
 
+### Marking Behavior
 libthai, the word breaking backend used, needs 'recovery space' of 3 correct words after an incorrect word.
 
 ```
