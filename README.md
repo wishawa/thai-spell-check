@@ -34,7 +34,7 @@ Custom files location requires some manual tweak.
 
 5. To specify ```thbrk.js``` location, edit the first line of ```checker.js``` from ```import thaiSpellcheckerBackend from './thbrk.js';``` to ```import thaiSpellcheckerBackend from './YOUR/PATH/HERE/thbrk.js';```. Path is *relative to ```checker.js```*. Also, you need the ```./``` if your path is relative. Again, absolute path works too.
 
-6. To specify ```checker.js``` location, just specify the path when importing. Ex: ```import('./YOUR/PATH/HERE/checker.js')```. Path is *relative to your JS file*. Also, you need the ```./``` if your path is relative. Again, absolute path works too.
+6. To specify ```checker.js``` location, just specify the path when importing (See Usage section for importing). Ex: ```import('./YOUR/PATH/HERE/checker.js')```. Path is *relative to your JS file*. Also, you need the ```./``` if your path is relative. Again, absolute path works too.
 
 
 # Usage
