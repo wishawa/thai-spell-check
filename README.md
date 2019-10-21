@@ -26,7 +26,12 @@ Column 2: the index of the first character *after* the misspelled word.
 ```
 
 
-
+## Files
+You only need
+1. checker.js
+2. thbrk.js
+3. thbrk.wasm
+4. thbrk.data
 
 
 
