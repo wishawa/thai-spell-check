@@ -81,7 +81,9 @@ window.onload = function() {
         }
         return;
     }
-}
+    else {
+        alert("no mistake!");
+    }
 }
 ```
 
