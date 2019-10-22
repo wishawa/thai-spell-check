@@ -45,9 +45,9 @@ This library provides a function ```checkThaiSpelling```.
 
 **return**: a 2D integer array of n rows and 2 columns, where n is the number of incorrectly spelled words.
 
-Column 1: the index of the first character of a misspellt word.
+Column 1: the index of the first character of a misspelt word.
 
-Column 2: the index of the first character *after* the misspellt word.
+Column 2: the index of the first character *after* the misspelt word.
 
 **Example**:
 
@@ -158,7 +158,7 @@ Also be careful of name collision.
 Typically, checking should take no more than 10 milliseconds. Still, you should assume the worst (a few hundred milliseconds, probably).
 
 ### Correctness
-Checking is not always correct. Currently, the checker does not take in account word usage frequency. A word can be misspellt to a less common (but still correct) word (ex. มาก -> มมาก).
+Checking is not always correct. Currently, the checker does not take in account word usage frequency. A word can be misspelt to a less common (but still correct) word (ex. มาก -> มมาก).
 
 ### Marking Behavior
 libthai, the word breaking backend used, needs 'recovery space' of 3 correct words after an incorrect word.
