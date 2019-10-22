@@ -1,3 +1,4 @@
+This is for developers. Want to just spellcheck your work? [Go here](https://wishawa.github.io/thai-spellcheck-extension/).
 # Thai-Spell-Check
 JavaScript-WebAssembly to check spelling of Thai text
 
