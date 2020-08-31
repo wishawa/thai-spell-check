@@ -20,7 +20,7 @@ The files you need are:
 
 4. ```thbrk.data```
 
-**Place all four files in the same directory of the page you want to use this on**
+**Place all four files in the same directory**
 
 ## Custom Files Location
 Custom files location requires some manual tweak.
